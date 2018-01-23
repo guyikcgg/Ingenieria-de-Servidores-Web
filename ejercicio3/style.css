@@ -1,0 +1,50 @@
+body {
+  margin-left: 15%;
+  margin-right: 15%;
+  background-color: lightgoldenrodyellow;
+  font-family: sans-serif;
+  font-size: 12px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h1, h2 {
+  text-decoration: underline;
+}
+
+img {
+  margin: auto;
+  display: block;
+  width: 80%;
+}
+
+table {
+  margin: auto;
+  border-spacing: 0px;
+  border-collapse: separate;
+}
+
+th {
+  background-color: peru;
+  color: white;
+  padding: 5px;
+}
+
+td, caption {
+  text-align: center;
+  font-weight: bold;
+  padding: 5px;
+}
+
+table, td, th, caption {
+  border-color: peru;
+  border-style: solid;
+  border-width: 1px;
+}
