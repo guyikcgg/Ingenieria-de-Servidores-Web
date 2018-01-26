@@ -1,0 +1,57 @@
+body {
+    /* Valores por defecto */
+    background-color: #606060;
+    text-align: center;
+    margin: 0px;
+    font: 10pt Arial, Helvetica, sans-serif;
+}
+.contenedor {
+    /* Valores para capa que contendrá las demás */
+    width: 700px;
+    margin: 0px auto;
+    text-align: left;
+    background-color: orange;
+    color: #606060;
+    border: 10px solid #c0c0c0;
+}
+.cabecera {
+    background-color: black;
+    color: white;
+    padding: 2px 15px 2px 15px;
+    font-family: "Trebuchet MS", Times, serif;
+}
+.cabecera h2 {
+    font-style: italic;
+    color: darkgray;
+}
+.barralateral {
+    width: 200px;
+    padding: 10px;
+    float: left;
+    text-align: justify;
+    background-color: #e8e8e8;
+    border-right: 1px solid darkgray;
+    border-bottom: 1px solid darkgray;
+    top: 0;
+    bottom: 0;
+}
+.principal {
+    padding: 10px;
+    margin-left: 225px;
+    text-align: justify;
+}
+.pie {
+    clear: both;
+    background-color: black;
+    color: darkgray;
+    padding: 10px;
+    text-align: center;
+}
+.pie a {
+    color: darkgray;
+}
+.pie li {
+    text-align: left;
+    margin-bottom: 4px;
+    /* list-style: none; */
+}
