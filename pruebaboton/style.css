@@ -1,0 +1,103 @@
+*{
+    margin: 0;
+}
+body{
+    background-color: white;
+    }
+
+.header{
+    background-color: #ff9600;
+    border-bottom: 10px solid #b46a00;
+
+
+}
+header{
+    font-size: large;
+    color: white;
+}
+header h1{
+    padding-top: 10px;
+    padding-left: 20px;
+}
+nav{
+    text-align: right;
+	padding-right: 20px;
+}
+nav li{
+    list-style: none;
+    display: inline;
+    color: white;
+	padding: 1px;
+}
+section{
+    padding: 20px;
+    text-align: justify;
+    float: left;
+    width: 50%;
+    margin-bottom: 60px;
+}
+section img{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 50vw;
+}
+aside{
+    float: right;
+    background-color: #b46a00;
+    padding: 30px;
+    margin-top: 50px;
+    margin-right: 20px;
+    width: 35%;
+}
+footer{
+    clear: both;
+    padding: 20px;
+    background-color: #ff9600;
+    color: white;
+    border-top: 10px solid #b46a00;
+}
+.myButton {
+	text-decoration: none;
+	color: white;
+	border-radius:0px;
+	background-color:#b46a00;
+	border-top: 2px solid #b46a00;
+	border-right: 2px solid #b46a00;
+	border-left: 2px solid #b46a00;
+	display:inline-block;
+	padding:4px 15px;
+}
+.myButton:hover {
+	background-color: #ff9600;
+	border-top: 2px solid #b46a00;
+	border-right: 2px solid #b46a00;
+	border-left: 2px solid #b46a00;
+
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+.myButton2 {
+	text-decoration: none;
+	color: white;
+	border-radius:0px;
+
+	background-color: #ff9600;
+	border-top: 2px solid #b46a00;
+	border-right: 2px solid #b46a00;
+	border-left: 2px solid #b46a00;
+	display:inline-block;
+	padding:4px 15px;
+}
+.myButton2:hover {
+	background-color:#b46a00;
+	border-top: 2px solid #b46a00;
+	border-right: 2px solid #b46a00;
+	border-left: 2px solid #b46a00;
+
+}
+.myButton2:active {
+	position:relative;
+	top:1px;
+}
