@@ -1,0 +1,52 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+/* Propiedades para body */
+body {
+    width: 960px;
+    margin: 15px auto; /* Márgenes superior e inferior de 15px */
+    /* Márgenes laterales automáticos */
+    text-align: left; /* La heredan todos los elementos */
+}
+/* Propiedades para header */
+header {
+    background-color: #fffbb9;
+    border: 1px solid #999999;
+    padding: 20px; /* Los 4 márgenes internos de 20px */
+}
+header h1 {
+    font: bold 20px verdana, sans-serif;
+}
+/* Propiedades para nav */
+nav {
+    background-color: #cccccc;
+    padding: 5px 15px;
+}
+nav li {
+    display: inline;
+    list-style: none;
+    padding: 5px;
+    font: bold 14px verdana, sans-serif;
+}
+/* Propiedades para section */
+section {
+    float: left;
+    width: 660px;
+    margin: 20px;
+}
+/* Propiedades para aside */
+aside {
+    float: left;
+    width: 220px;
+    margin: 20px 0px;
+    padding: 20px;
+    background-color: #cccccc;
+}
+/* Propiedades para footer */
+footer {
+    clear: both;
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid #999999;
+}
