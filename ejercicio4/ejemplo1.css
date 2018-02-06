@@ -35,6 +35,10 @@ body {
     top: 0;
     bottom: 0;
 }
+.foto {
+    width: 180px;
+    margin: auto;
+}
 .principal {
     padding: 10px;
     margin-left: 225px;

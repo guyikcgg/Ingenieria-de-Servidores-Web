@@ -1,0 +1,55 @@
+.cajaborderedondo{
+    border: 2px solid #a1a6a9;
+    padding: 20px 20px;
+    width: 300px;
+    background: #00ff00;
+    border-radius: 20px;
+}
+.cajabordesemiredondo{
+    border: 5px solid #000000;
+    padding: 20px 20px;
+    width: 300px;
+    background: #ff0000;
+    border-radius: 50px 0px 50px 0px;
+}
+.cajasombreada{
+    border: 2px solid #000000;
+    padding: 20px 20px;
+    width: 300px;
+    background: rgba(255,0,0,0.2);
+    border-radius: 0px;
+    box-shadow: 10px 10px 10px #aaaaaa;
+}
+.cajasombreadatest{
+    float: right;
+    border: 2px solid #000000;
+    padding: 20px 20px;
+    width: 300px;
+    background: rgba(255,0,0,0.2);
+    border-radius: 0px;
+    box-shadow: -10px -10px 10px #aaaaaa;
+}
+.cajagradientelineal{
+    text-align: center;
+    padding: 50px;
+    padding-top: 100px;
+    width: 250px;
+    height: 100px;
+    background: linear-gradient(black, white);
+}
+.cajagradientelinealright{
+    text-align: center;
+    padding: 50px;
+    padding-top: 100px;
+    width: 250px;
+    height: 100px;
+    background: linear-gradient(to right, red, green, blue);
+}
+.cajagradienteradial{
+    text-align: center;
+    padding: 50px;
+    padding-top: 100px;
+    width: 250px;
+    height: 100px;
+    background: radial-gradient(red, green, blue);
+}

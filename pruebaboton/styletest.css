@@ -1,0 +1,30 @@
+.myButton {
+
+	border-radius:50px;
+	background-color:#b46a00;
+	display:inline-block;
+	padding:50px 50px;
+}
+.myButton:hover {
+	background-color: #ff9600;
+
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+.myButton2 {
+
+	border-radius:50px;
+	background-color:#ff3800;
+	display:inline-block;
+	padding:50px 50px;
+}
+.myButton2:hover {
+	background-color: #bf1989;
+
+}
+.myButton2:active {
+	position:relative;
+	top:1px;
+}
