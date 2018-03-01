@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title>Ejemplo 1</title>
+        <link rel="stylesheet" href="ejemplo1.css">
+        <script type="text/javascript" src="ejemplo1.js">
+
+        </script>
+    </head>
+    <body>
+
+        <script type="text/javascript">
+            var n = prompt("Introduzca un número:");
+            n = parseInt(n);
+
+            if (isEven(n)) {
+                document.write(n + " es par");
+            } else {
+                document.write(n + " es impar");
+            }
+            document.write("<br>");
+            document.write(n + "! = " + fact(n));
+        </script>
+
+
+    </body>
+</html>

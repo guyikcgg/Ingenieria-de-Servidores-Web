@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title>Ejemplo 1</title>
+        <link rel="stylesheet" href="ejemplo3.css">
+        <script type="text/javascript" src="ejemplo3.js">
+
+        </script>
+    </head>
+    <body>
+        <div id="capa">
+            <ul>
+                <li> <a href="#">Primer enlace</a> </li>
+                <li> <a href="#">Segundo enlace</a> </li>
+                <li> <a href="#">Tercer enlace</a> </li>
+            </ul>
+        </div>
+
+        <ul>
+            <li> <a href="#">Cuarto enlace</a> </li>
+            <li> <a href="#">Quinto enlace</a> </li>
+            <li> <a href="#">Sexto enlace</a> </li>
+        </ul>
+
+        <script type="text/javascript">
+            var capa=document.getElementById("capa");
+            enlaces=capa.getElementsByTagName("a");
+            for (var i = 0; i < enlaces.length; i++) {
+                enlaces[i].addEventListener("mouseover", FondoVerde);
+                enlaces[i].addEventListener("mouseout", FondoBlanco);
+            }
+        </script>
+
+
+    </body>
+</html>
