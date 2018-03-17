@@ -2,6 +2,8 @@ runtime: php55
 api_version: 1
 
 handlers:
+- url: /auth.php
+  script: auth.php
 - url: /client.php
   script: client.php
 - url: /server.php
