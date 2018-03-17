@@ -1,0 +1,10 @@
+runtime: php55
+api_version: 1
+
+handlers:
+- url: /client.php
+  script: client.php
+- url: /server.php
+  script: server.php
+- url: /.*
+  script: server.php

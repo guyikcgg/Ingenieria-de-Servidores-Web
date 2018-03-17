@@ -1,0 +1,1 @@
+dev_appserver.py --php_executable_path=/usr/bin/php5-cgi /home/cristian/workspace/master/ejemplo2
