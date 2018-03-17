@@ -23,14 +23,25 @@ ini_set('default_socket_timeout', 50);
 ini_set('soap.wsdl_cache_enabled',0);
 ini_set('soap.wsdl_cache_ttl',0);
 
-$client = new SoapClient(null, array('location'=>$location, 'uri'=>"http://test-uri/", 'trace'=>1));
 
 $qtt = $_GET["qtt"];
+
+try {
+	$client = new SoapClient(null, array('location'=>$location, 'uri'=>"http://test-uri/", 'trace'=>1));
+} catch (SoapFault $error) {
+	echo $error->faultstring;
+}
+
 ?>
 
 <p>
 <?php
-echo "2 * ".$qtt." = ".$client->multiplica_por_2($qtt);
+try {
+	echo "2 * ".$qtt." = ".$client->multiplica_por_2($qtt);
+} catch (SoapFault $error) {
+	echo $error->faultstring;
+	echo htmlspecialchars($client->__getLastResponse(), END_QUOTES);
+}
 ?>
 </p>
 
