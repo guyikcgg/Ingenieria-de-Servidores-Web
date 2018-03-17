@@ -15,6 +15,8 @@
         <?php
         // Required by Google App Engine
         libxml_disable_entity_loader(false);
+	ini_set('soap.wsdl_cache_enabled',0);
+	ini_set('soap.wsdl_cache_ttl',0);
 
         // Load Magic Square service
         $wsdl = "http://www.cs.fsu.edu/~engelen/magic.wsdl";
