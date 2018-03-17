@@ -16,10 +16,12 @@
 libxml_disable_entity_loader(false);
 
 // Load custom service
-$location = "http://localhost:8080/server.php";
+$location = "http://my-visit-counter.appspot.com/";
 
 // Set Soap timeout
-ini_set('default_socket_timeout', 5);
+ini_set('default_socket_timeout', 50);
+ini_set('soap.wsdl_cache_enabled',0);
+ini_set('soap.wsdl_cache_ttl',0);
 
 $client = new SoapClient(null, array('location'=>$location, 'uri'=>"http://test-uri/", 'trace'=>1));
 
