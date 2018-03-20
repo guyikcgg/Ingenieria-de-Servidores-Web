@@ -33,6 +33,7 @@ if (!isset($dsn, $user) || false === $password) {
 
 // Web-service functions
 function CrearContador($userID) {
+    global $db, $connected, $exception;
     if (!connected) throw new SoapFault("Server", "Unable to connect to database. $exception");
     if (empty($userID)) throw new SoapFault("Client", '$userID required');
 
@@ -45,6 +46,7 @@ function CrearContador($userID) {
 }
 
 function LeerContador($counterID) {
+    global $db, $connected, $exception;
     if (!connected) throw new SoapFault("Server", "Unable to connect to database. $exception");
     if (empty($counterID)) throw new SoapFault("Client", '$counterID required');
 
@@ -63,6 +65,7 @@ function LeerContador($counterID) {
 }
 
 function AsignarContador($counterID, $value) {
+    global $db, $connected, $exception;
     if (!connected) throw new SoapFault("Server", "Unable to connect to database. $exception");
     if (empty($counterID)) throw new SoapFault("Client", '$counterID required');
 
@@ -75,15 +78,18 @@ function AsignarContador($counterID, $value) {
 }
 
 function IncrementarContador($counterID) {
+    global $db, $connected, $exception;
     AsignarContador($counterID, LeerContador($counterID)+1);
     return 0;
 }
 
 function ResetearContador($counterID) {
+    global $db, $connected, $exception;
     AsignarContador($counterID, 0);
 }
 
 function EliminarContador($counterID) {
+    global $db, $connected, $exception;
     if (!connected) throw new SoapFault("Server", "Unable to connect to database. $exception");
     if (empty($counterID)) throw new SoapFault("Client", '$counterID required');
 
@@ -96,6 +102,7 @@ function EliminarContador($counterID) {
 }
 
 function ListarContadores($userID) {
+    global $db, $connected, $exception;
     if (!connected) throw new SoapFault("Server", "Unable to connect to database. $exception");
     if (empty($userID)) throw new SoapFault("Client", '$userID required');
 
@@ -105,7 +112,7 @@ function ListarContadores($userID) {
         $results = $db->query('SELECT counterID FROM counters WHERE userID="'.$userID.'";');
 
         foreach($results as $row) {
-            $retval = $retval.','.$row[0];
+            $retval = $retval .','.$row[0];
             // TODO maybe use a list, whichever is easier to parse
         }
 
