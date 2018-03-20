@@ -8,5 +8,16 @@ handlers:
   script: client.php
 - url: /server.php
   script: server.php
+- url: /db.php
+  script: db.php
 - url: /.*
   script: server.php
+
+# [START env]
+env_variables:
+  # Replace USER, PASSWORD, DATABASE, and CONNECTION_NAME with the
+  # values obtained when configuring your Cloud SQL instance.
+  MYSQL_DSN: mysql:unix_socket=/cloudsql/my-visit-counter:us-central1:myvisitcounterdb;dbname=counterdb
+  MYSQL_USER: mvc-app
+  MYSQL_PASSWORD: '239}=9/##f9ohU8jA?'
+# [END env]
