@@ -106,14 +106,13 @@ function ListarContadores($userID) {
     if (!connected) throw new SoapFault("Server", "Unable to connect to database. $exception");
     if (empty($userID)) throw new SoapFault("Client", '$userID required');
 
-    $retval = "";
+    $retval = array();
 
     try {
         $results = $db->query('SELECT counterID FROM counters WHERE userID="'.$userID.'";');
 
         foreach($results as $row) {
-            $retval = $retval .','.$row[0];
-            // TODO maybe use a list, whichever is easier to parse
+            array_push($retval, $row[0]);
         }
 
     } catch (Exception $e) {
