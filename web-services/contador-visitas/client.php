@@ -41,12 +41,19 @@
 	</script>
 
 	<form action="client.php" method="get">
-		<label for="qtt">Numero:<br></label>
-		<input type="number" name="qtt" required>
-		<input type="submit" value="Multiplicar">
+		<label for="userID">userID</label>
+		<input type="text" name="userID" required>
+		<input type="submit" value="Listar Contadores">
+	</form>
+
+	<form action="client.php" method="get">
+		<label for="counterID">counterID</label>
+		<input type="number" name="counterID" required>
+		<input type="submit" value="Leer Contador">
 	</form>
 
 <?php
+
 // Required by Google App Engine
 libxml_disable_entity_loader(false);
 
@@ -59,7 +66,8 @@ ini_set('soap.wsdl_cache_enabled',0);
 ini_set('soap.wsdl_cache_ttl',0);
 
 
-$qtt = $_GET["qtt"];
+$userID = $_GET["userID"];
+$counterID = $_GET["counterID"];
 
 try {
 	$client = new SoapClient(null, array('location'=>$location, 'uri'=>"http://test-uri/", 'trace'=>1));
@@ -72,7 +80,18 @@ try {
 <p>
 <?php
 try {
-	echo "2 * ".$qtt." = ".$client->multiplica_por_2($qtt);
+    $a = $client->ListarContadores($userID);
+	echo "User[$userID] = ";
+    foreach($a as $b) {
+        echo "$b<br>\n";
+    }
+} catch (SoapFault $error) {
+	echo $error->faultstring;
+	echo htmlspecialchars($client->__getLastResponse(), END_QUOTES);
+}
+echo "\n<br>\n";
+try {
+	echo "Counter[$counterID] = ".$client->LeerContador($counterID);
 } catch (SoapFault $error) {
 	echo $error->faultstring;
 	echo htmlspecialchars($client->__getLastResponse(), END_QUOTES);
