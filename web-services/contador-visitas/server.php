@@ -38,7 +38,7 @@ function CrearContador($userID) {
     if (empty($userID)) throw new SoapFault("Client", '$userID required');
 
     try {
-        $db->query('INSERT INTO counters (userID) values("'.$userID.'");');
+        $db->query('INSERT INTO counters (userID, value) values("'.$userID.'", 0);');
     } catch (Exception $e) {
         throw new SoapFault("Server", $e->getMessage());
     }
