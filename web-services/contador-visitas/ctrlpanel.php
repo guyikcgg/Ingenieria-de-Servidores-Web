@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<?php
+function alert_warning($str) {
+    echo "<script>alert_warning('".$str."');</script>";
+}
+function alert_danger($str) {
+    echo "<script>alert_danger('".$str."');</script>";
+}
+?>
 <html lang="en"><head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
@@ -17,7 +25,36 @@
 
         <!-- Fontawesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <style></style></head>
+        <style>
+        </style>
+        </head>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+        <script>
+            button = '<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>';
+        function alert_danger(str) {
+            $('#alert-zone').html('<div class="alert alert-danger" role="alert">'+str+button+'</div>');
+        }
+        function alert_warning(str) {
+            $('#alert-zone').html('<div class="alert alert-warning" role="alert">'+str+button+'</div>');
+        }
+
+        function addCounter(userToken) {
+            $.post("addcounter.php", {userID: userToken}, function(data, status) {
+    alert_warning("data: "+data+" status: "+status);
+});
+
+            /* var xmlhttp = new XMLHttpRequest(); */
+            /* xmlhttp.onreadystatechange = function() { */
+            /*     if (this.readyState == 4 && this.status == 200) { */
+            /*         document.getElementById("txtHint").innerHTML = this.responseText; */
+            /*     } */
+            /* }; */
+            /* xmlhttp.open("GET", "gethint.php?q=" + str, true); */
+            /* xmlhttp.send(); */
+        }
+
+        </script>
 
     <body class="bg-light">
 
@@ -44,6 +81,7 @@
 
         <main role="main" class="container">
 
+        <div id="alert-zone" class="my-3"></div>
             <div class="my-3 p-3 bg-white rounded box-shadow">
                 <h6 class="border-bottom border-gray pb-2 mb-0">Counters</h6>
 <?php
@@ -58,22 +96,20 @@ ini_set('default_socket_timeout', 50);
 ini_set('soap.wsdl_cache_enabled',0);
 ini_set('soap.wsdl_cache_ttl',0);
 
+try {
+    $client = new SoapClient(null, array('location'=>$location, 'uri'=>"http://test-uri/", 'trace'=>1));
+} catch (SoapFault $error) {
+    alert_danger('Error while connecting to server. SoapClient says: '.$error->faultstring);
+}
+
 // TODO remove!!
 $userID = $_GET["userID"];
 
 try {
-    $client = new SoapClient(null, array('location'=>$location, 'uri'=>"http://test-uri/", 'trace'=>1));
-} catch (SoapFault $error) {
-    echo '
-<div class="alert alert-danger" role="alert">
-Error while connecting to server. SoapClient says:
-'.$error->faultstring.'
-</div>
-';
-}
-
-try {
     $counterList = $client->ListarContadores($userID);
+    if (sizeof($counterList) == 0) {
+        alert_warning("You do not have any counter yet. Tip: click <i>Add counter</i>");
+    }
     foreach($counterList as $counterID) {
         $visits = $client->LeerContador($counterID);
         $fVisits = $visits;
@@ -98,13 +134,12 @@ try {
  ';
     }
 } catch (SoapFault $error) {
-	echo $error->faultstring;
-	echo htmlspecialchars($client->__getLastResponse(), END_QUOTES);
+    alert_danger('Error while retrieving counters: '.$error->faultstring."\n<br>Last SOAP call: ".htmlspecialchars($client->__getLastResponse(), END_QUOTES));
 }
 
 ?>
                <small class="d-block text-right mt-3">
-                    <a href="#">Add counter</a>
+                    <a href="javascript:addCounter('105254206823854116816')">Add counter</a>
                 </small>
             </div>
         </main>
@@ -112,7 +147,6 @@ try {
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
             <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
