@@ -2,16 +2,12 @@ runtime: php55
 api_version: 1
 
 handlers:
-- url: /auth.php
-  script: auth.php
-- url: /client.php
-  script: client.php
-- url: /server.php
+- url: /ctrlpanel.php
+  script: ctrlpanel.php
+- url: /service.php
   script: server.php
-- url: /db.php
-  script: db.php
 - url: /.*
-  script: server.php
+  script: client.php
 
 # [START env]
 env_variables:
