@@ -32,6 +32,9 @@ function alert_danger($str) {
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
         <script>
             button = '<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>';
+        function alert_success(str) {
+            $('#alert-zone').html('<div class="alert alert-success" role="alert">'+str+button+'</div>');
+        }
         function alert_danger(str) {
             $('#alert-zone').html('<div class="alert alert-danger" role="alert">'+str+button+'</div>');
         }
@@ -41,7 +44,28 @@ function alert_danger($str) {
 
         function addCounter(userToken) {
             $.post("addcounter.php", {userID: userToken}, function(data, status) {
-    alert_warning("data: "+data+" status: "+status);
+                if (status == 'success') {
+                    status = data.substring(0, 4);
+                    data   = data.substr(6);
+                    switch (status) {
+                        case "_OK_":
+                        alert_success(data);
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 2000);
+                        break;
+
+                        case "ERR_":
+                        alert_danger(data);
+                        break;
+
+                        case "WARN":
+                        alert_warning(data);
+                        break;
+                    }
+                } else {
+                    alert_danger("Error while connecting to <i>addcounter.php</i>. STATUS: "+status+" DATA: "+data);
+                }
 });
 
             /* var xmlhttp = new XMLHttpRequest(); */

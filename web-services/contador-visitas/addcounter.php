@@ -17,16 +17,16 @@ $userID = $_POST["userID"];
 try {
 	$client = new SoapClient(null, array('location'=>$location, 'uri'=>"http://test-uri/", 'trace'=>1));
 } catch (SoapFault $error) {
-    // FIXME give a formatted error
-	echo $error->faultstring;
+	echo "ERR_: $error->faultstring";
 }
 
 try {
     $client->CrearContador($userID);
-    echo "OK: $userID";
+    echo "_OK_: The counter was correctly added. Refreshing...";
 } catch (SoapFault $error) {
     // FIXME give a formatted error
-    echo 'Error while adding counter: '.$error->faultstring."\n<br>Last SOAP call: ".htmlspecialchars($client->__getLastResponse(), END_QUOTES);
+    echo "WARN: Error while adding counter: <b>$error->faultstring</b>";
+    /* echo 'Error while adding counter: '.$error->faultstring."\n<br>Last SOAP call: ".htmlspecialchars($client->__getLastResponse(), END_QUOTES); */
 }
 
 ?>
