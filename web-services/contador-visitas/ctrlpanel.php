@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+
 function alert_warning($str) {
     echo "<script>alert_warning('".$str."');</script>";
 }
@@ -135,7 +136,7 @@ function alert_danger($str) {
 libxml_disable_entity_loader(false);
 
 // Load custom service
-$location = "http://my-visit-counter.appspot.com/";
+$location = "http://my-visit-counter.appspot.com/service.php";
 
 // Set Soap timeout
 ini_set('default_socket_timeout', 50);
@@ -148,10 +149,9 @@ try {
     alert_danger('Error connecting to server. SoapClient says: '.$error->faultstring);
 }
 
-// TODO remove!!
-$userID = $_GET["userID"];
-echo "<script>userToken = '$userID';</script>";
-
+try {
+    include 'auth.php';
+    echo "<script>userToken = '$userID';</script>";
 try {
     $counterList = $client->ListarContadores($userID);
     if (sizeof($counterList) == 0) {
@@ -183,6 +183,11 @@ try {
 } catch (SoapFault $error) {
     alert_danger('Error retrieving counters: '.$error->faultstring."\n<br>Last SOAP call: ".htmlspecialchars($client->__getLastResponse(), END_QUOTES));
 }
+} catch (Exception $e) {
+    alert_danger('Authentication error: '.$e->getMessage());
+}
+
+
 
 ?>
                <small class="d-block text-right mt-3">

@@ -3,8 +3,15 @@
  * USER AUTHENTICATION
  */
 
+try {
+    include 'auth.php';
+} catch (Exception as $e) {
+    echo "ERR_: Authentication failed: $e->faultstring";
+}
+
+
 // TODO AUTHENTICATE USER
-$userID = $_POST["userToken"];
+/* $userID = $_POST["userToken"]; */
 
 
 /**
@@ -17,7 +24,7 @@ $action = $_POST["q"];
 libxml_disable_entity_loader(false);
 
 // Load custom service
-$location = "http://my-visit-counter.appspot.com/";
+$location = "http://my-visit-counter.appspot.com/service.php";
 
 // Set Soap timeout
 ini_set('default_socket_timeout', 50);
