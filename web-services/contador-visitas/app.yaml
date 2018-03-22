@@ -6,7 +6,11 @@ handlers:
   script: ctrlpanel.php
 - url: /service.php
   script: server.php
-- url: /.*
+- url: /manage.php
+  script: manage.php
+- url: /ctrlpanel_files
+  static_dir: ctrlpanel_files
+- url: /
   script: client.php
 
 # [START env]

@@ -4,9 +4,9 @@
  */
 
 try {
-    include 'auth.php';
-} catch (Exception as $e) {
-    echo "ERR_: Authentication failed: $e->faultstring";
+    require 'auth.php';
+} catch (Exception $e) {
+    echo "ERR_: Authentication failed: ".$e->getMessage();
 }
 
 
@@ -24,7 +24,7 @@ $action = $_POST["q"];
 libxml_disable_entity_loader(false);
 
 // Load custom service
-$location = "http://my-visit-counter.appspot.com/service.php";
+$location = "https://my-visit-counter.appspot.com/service.php";
 
 // Set Soap timeout
 ini_set('default_socket_timeout', 50);

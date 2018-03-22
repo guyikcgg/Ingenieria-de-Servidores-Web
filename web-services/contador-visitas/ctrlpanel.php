@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <?php
-
 function alert_warning($str) {
     echo "<script>alert_warning('".$str."');</script>";
 }
@@ -8,12 +7,13 @@ function alert_danger($str) {
     echo "<script>alert_danger('".$str."');</script>";
 }
 ?>
-<html lang="en"><head>
+<html lang="en">
+    <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="My-Visit-Counter control panel">
+        <meta name="author" content="Cristian G Guerrero">
         <!-- link rel="icon" href="http://getbootstrap.com/favicon.ico" TODO-->
 
         <title>My Visit Counter - Control Panel</title>
@@ -28,19 +28,23 @@ function alert_danger($str) {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>
         </style>
-        </head>
+    </head>
 
+    <body class="bg-light">
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
         <script>
             button = '<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>';
         function alert_success(str) {
-            $('#alert-zone').html('<div class="alert alert-success" role="alert">'+str+button+'</div>');
+            $('#alert-zone').append('<div class="alert alert-success" role="alert">'+str+button+'</div>');
         }
         function alert_danger(str) {
-            $('#alert-zone').html('<div class="alert alert-danger" role="alert">'+str+button+'</div>');
+            $('#alert-zone').append('<div class="alert alert-danger" role="alert">'+str+button+'</div>');
         }
         function alert_warning(str) {
-            $('#alert-zone').html('<div class="alert alert-warning" role="alert">'+str+button+'</div>');
+            $('#alert-zone').append('<div class="alert alert-warning" role="alert">'+str+button+'</div>');
+        }
+        function logout() {
+            document.cookie = 'id_token=;expires=Wed; 01 Jan 1970';
         }
 
         function display_received_msg(data, status) {
@@ -61,6 +65,11 @@ function alert_danger($str) {
                     case "WARN":
                     alert_warning(data);
                     retval = 'warning';
+                    break;
+
+                    default:
+                    alert_danger("Received unformatted message: "+data);
+                    retval = 'error';
                     break;
                 }
             } else {
@@ -98,12 +107,13 @@ function alert_danger($str) {
                             window.location.reload();
                         }, 500);
                     }
+                }).fail(function() {
+                    alert_danger("Error connecting to 'manage.php'");
                 });
         }
 
         </script>
 
-    <body class="bg-light">
 
         <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
             <a class="navbar-brand" href="#">My Visit Counter</a>
@@ -120,7 +130,7 @@ function alert_danger($str) {
                         <a class="nav-link" href="#">API reference</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Logout</a>
+                        <a class="nav-link" href="javascript:logout()">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -149,9 +159,14 @@ try {
     alert_danger('Error connecting to server. SoapClient says: '.$error->faultstring);
 }
 
+// Authenticate the user
 try {
-    include 'auth.php';
-    echo "<script>userToken = '$userID';</script>";
+    require 'auth.php';
+    echo '<script>userToken = "'.$userID.'";</script>'."\n";
+} catch (Exception $e) {
+    alert_danger('Authentication error: '.$e->getMessage());
+}
+
 try {
     $counterList = $client->ListarContadores($userID);
     if (sizeof($counterList) == 0) {
@@ -183,10 +198,6 @@ try {
 } catch (SoapFault $error) {
     alert_danger('Error retrieving counters: '.$error->faultstring."\n<br>Last SOAP call: ".htmlspecialchars($client->__getLastResponse(), END_QUOTES));
 }
-} catch (Exception $e) {
-    alert_danger('Authentication error: '.$e->getMessage());
-}
-
 
 
 ?>
@@ -199,17 +210,17 @@ try {
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-            <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-            <script src="ctrlpanel_files/holder.js"></script>
-            <script src="ctrlpanel_files/offcanvas.js"></script>
+        <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="ctrlpanel_files/holder.js"></script>
+        <script src="ctrlpanel_files/offcanvas.js"></script>
 
 
-<script>
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-                });
-            </script>
-        </body>
-    </html>
+        <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        </script>
+    </body>
+</html>
