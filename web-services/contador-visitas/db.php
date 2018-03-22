@@ -43,9 +43,9 @@ $my_counter = 0;
 /* echo "\n<br>"; */
 /* echo $results->columnCount; */
 
-$my_counter = $results[0][1];
+$my_counter = $results->rowCount();
 
-echo "counter: " . $my_counter;
+echo "counter: $my_counter";
 echo "\n<br>";
 echo $results;
 ?>
