@@ -42,40 +42,62 @@ function alert_danger($str) {
             $('#alert-zone').html('<div class="alert alert-warning" role="alert">'+str+button+'</div>');
         }
 
-        function addCounter(userToken) {
-            $.post("addcounter.php", {userID: userToken}, function(data, status) {
-                if (status == 'success') {
-                    status = data.substring(0, 4);
-                    data   = data.substr(6);
-                    switch (status) {
-                        case "_OK_":
-                        alert_success(data);
+        function display_received_msg(data, status) {
+            if (status == 'success') {
+                status = data.substring(0, 4);
+                data   = data.substr(6);
+                switch (status) {
+                    case "_OK_":
+                    alert_success(data);
+                    retval = 'success';
+                    break;
+
+                    case "ERR_":
+                    alert_danger(data);
+                    retval = 'error';
+                    break;
+
+                    case "WARN":
+                    alert_warning(data);
+                    retval = 'warning';
+                    break;
+                }
+            } else {
+                alert_danger("Error connecting to <i>manage.php</i>. STATUS: "+status+" DATA: "+data);
+                retval = 'error';
+            }
+            return retval;
+        }
+
+        // Add counter
+        function addCounter() {
+            $.post("manage.php",
+                {
+                    userToken: userToken,
+                    q: "addCounter"
+                }, function(data, status) {
+                    if (display_received_msg(data, status) == 'success') {
                         setTimeout(function() {
                             window.location.reload();
-                        }, 2000);
-                        break;
-
-                        case "ERR_":
-                        alert_danger(data);
-                        break;
-
-                        case "WARN":
-                        alert_warning(data);
-                        break;
+                        }, 500);
                     }
-                } else {
-                    alert_danger("Error while connecting to <i>addcounter.php</i>. STATUS: "+status+" DATA: "+data);
-                }
-});
+                });
+        }
 
-            /* var xmlhttp = new XMLHttpRequest(); */
-            /* xmlhttp.onreadystatechange = function() { */
-            /*     if (this.readyState == 4 && this.status == 200) { */
-            /*         document.getElementById("txtHint").innerHTML = this.responseText; */
-            /*     } */
-            /* }; */
-            /* xmlhttp.open("GET", "gethint.php?q=" + str, true); */
-            /* xmlhttp.send(); */
+        // Delete conter
+        function deleteCounter(counterID) {
+            $.post("manage.php",
+                {
+                    userToken: userToken,
+                    q: "deleteCounter",
+                    counterID: counterID
+                }, function(data, status) {
+                    if (display_received_msg(data, status) == 'success') {
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 500);
+                    }
+                });
         }
 
         </script>
@@ -123,11 +145,12 @@ ini_set('soap.wsdl_cache_ttl',0);
 try {
     $client = new SoapClient(null, array('location'=>$location, 'uri'=>"http://test-uri/", 'trace'=>1));
 } catch (SoapFault $error) {
-    alert_danger('Error while connecting to server. SoapClient says: '.$error->faultstring);
+    alert_danger('Error connecting to server. SoapClient says: '.$error->faultstring);
 }
 
 // TODO remove!!
 $userID = $_GET["userID"];
+echo "<script>userToken = '$userID';</script>";
 
 try {
     $counterList = $client->ListarContadores($userID);
@@ -152,18 +175,18 @@ try {
                     <div style="font-size: x-large;">
                         <a href="#" style="padding: 2px" data-toggle="tooltip" data-placement="top" title="Reset to zero"><i class="fa fa-undo"></i></a>
                         <a href="#" style="padding: 2px" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-                        <a href="#" style="padding: 2px" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-trash"></i></a>
+                        <a href="javascript:deleteCounter('.$counterID.')" style="padding: 2px" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-trash"></i></a>
                     </div>
                 </div>
  ';
     }
 } catch (SoapFault $error) {
-    alert_danger('Error while retrieving counters: '.$error->faultstring."\n<br>Last SOAP call: ".htmlspecialchars($client->__getLastResponse(), END_QUOTES));
+    alert_danger('Error retrieving counters: '.$error->faultstring."\n<br>Last SOAP call: ".htmlspecialchars($client->__getLastResponse(), END_QUOTES));
 }
 
 ?>
                <small class="d-block text-right mt-3">
-                    <a href="javascript:addCounter('105254206823854116816')">Add counter</a>
+                    <a href="javascript:addCounter()">Add counter</a>
                 </small>
             </div>
         </main>
