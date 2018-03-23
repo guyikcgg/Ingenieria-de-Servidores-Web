@@ -91,11 +91,71 @@ function alert_danger($str) {
                             window.location.reload();
                         }, 500);
                     }
+                }).fail(function() {
+                    alert_danger("Error connecting to 'manage.php'");
+                });
+        }
+
+        // Increment counter
+        function incrementCounter(counterID) {
+            $.post("manage.php",
+                {
+                    userToken: userToken,
+                    q: "incrementCounter",
+                    counterID: counterID
+                }, function(data, status) {
+                    if (display_received_msg(data, status) == 'success') {
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 500);
+                    }
+                }).fail(function() {
+                    alert_danger("Error connecting to 'manage.php'");
+                });
+        }
+
+        // Reset counter
+        function resetCounter(counterID) {
+            $.post("manage.php",
+                {
+                    userToken: userToken,
+                    q: "resetCounter",
+                    counterID: counterID
+                }, function(data, status) {
+                    if (display_received_msg(data, status) == 'success') {
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 500);
+                    }
+                }).fail(function() {
+                    alert_danger("Error connecting to 'manage.php'");
+                });
+        }
+
+        // Edit conter value
+        function editValue(counterID) {
+            var newValue = prompt("Enter new value for the counter", "0");
+            $.post("manage.php",
+                {
+                    userToken: userToken,
+                    q: "editCounter",
+                    counterID: counterID,
+                    value: newValue
+                }, function(data, status) {
+                    if (display_received_msg(data, status) == 'success') {
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 500);
+                    }
+                }).fail(function() {
+                    alert_danger("Error connecting to 'manage.php'");
                 });
         }
 
         // Delete conter
         function deleteCounter(counterID) {
+            var doDelete = confirm("Really delete counter '"+counterID.toString()+"' ?");
+            if (doDelete)
             $.post("manage.php",
                 {
                     userToken: userToken,
@@ -188,8 +248,9 @@ try {
                         <span class="d-block">#'.$counterID.'</span>
                     </div>
                     <div style="font-size: x-large;">
-                        <a href="#" style="padding: 2px" data-toggle="tooltip" data-placement="top" title="Reset to zero"><i class="fa fa-undo"></i></a>
-                        <a href="#" style="padding: 2px" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+                        <a href="javascript:incrementCounter('.$counterID.')" style="padding: 2px" data-toggle="tooltip" data-placement="top" title="Increment value by one"><i class="fa fa-plus-square"></i></a>
+                        <a href="javascript:resetCounter('.$counterID.')" style="padding: 2px" data-toggle="tooltip" data-placement="top" title="Reset to zero"><i class="fa fa-undo"></i></a>
+                        <a href="javascript:editValue('.$counterID.')" style="padding: 2px" data-toggle="tooltip" data-placement="top" title="Edit value"><i class="fa fa-edit"></i></a>
                         <a href="javascript:deleteCounter('.$counterID.')" style="padding: 2px" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-trash"></i></a>
                     </div>
                 </div>

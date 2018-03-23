@@ -61,16 +61,18 @@ function LeerContador($counterID) {
     } catch (Exception $e) {
         throw new SoapFault("Server", $e->getMessage());
     }
-    return $retval;
+    return (int)$retval;
 }
 
 function AsignarContador($counterID, $value) {
     global $db, $connected, $exception;
     if (!connected) throw new SoapFault("Server", "Unable to connect to database. $exception");
     if (empty($counterID)) throw new SoapFault("Client", '$counterID required');
+    if (!isset($value)) throw new SoapFault("Client", '$value required');
 
     try {
-        $db->query('UPDATE counters SET value = '.$value.', lastUpdate = '.date("Y-m-d H:i:s").' WHERE counterID="myUserID";');
+        $db->query('UPDATE counters SET value = '.$value.' WHERE counterID="'.$counterID.'";');
+        /* $db->query('UPDATE counters SET value = '.$value.', lastUpdate = '.date("Y-m-d H:i:s").' WHERE counterID="'.$counterID.'";'); */
     } catch (Exception $e) {
         throw new SoapFault("Server", $e->getMessage());
     }
@@ -79,7 +81,14 @@ function AsignarContador($counterID, $value) {
 
 function IncrementarContador($counterID) {
     global $db, $connected, $exception;
-    AsignarContador($counterID, LeerContador($counterID)+1);
+    if (!connected) throw new SoapFault("Server", "Unable to connect to database. $exception");
+    if (empty($counterID)) throw new SoapFault("Client", '$counterID required');
+
+    try {
+        $db->query('UPDATE counters SET value = value + 1 WHERE counterID="'.$counterID.'";');
+    } catch (Exception $e) {
+        throw new SoapFault("Server", $e->getMessage());
+    }
     return 0;
 }
 

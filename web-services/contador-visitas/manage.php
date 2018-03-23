@@ -44,9 +44,25 @@ case 'addCounter':
         $client->CrearContador($userID);
         echo "_OK_: The counter was correctly added. Refreshing...";
     } catch (SoapFault $error) {
-        // FIXME give a formatted error
         echo "WARN: Error adding counter: <b>$error->faultstring</b>";
-        /* echo 'Error adding counter: '.$error->faultstring."\n<br>Last SOAP call: ".htmlspecialchars($client->__getLastResponse(), END_QUOTES); */
+    }
+    break;
+
+case 'resetCounter':
+    try {
+        $client->ResetearContador($_POST["counterID"]);
+        echo "_OK_: The counter was correctly reseted to zero. Refreshing...";
+    } catch (SoapFault $error) {
+        echo "WARN: Error resetting counter: <b>$error->faultstring</b>";
+    }
+    break;
+
+case 'incrementCounter':
+    try {
+        $client->IncrementarContador($_POST["counterID"]);
+        echo "_OK_: The counter was correctly incremented. Refreshing...";
+    } catch (SoapFault $error) {
+        echo "WARN: Error incrementing counter: <b>$error->faultstring</b>";
     }
     break;
 
@@ -55,14 +71,20 @@ case 'deleteCounter':
         $client->EliminarContador($_POST["counterID"]);
         echo "_OK_: The counter was correctly deleted. Refreshing...";
     } catch (SoapFault $error) {
-        // FIXME give a formatted error
         echo "WARN: Error deleting counter: <b>$error->faultstring</b>";
-        /* echo 'Error adding counter: '.$error->faultstring."\n<br>Last SOAP call: ".htmlspecialchars($client->__getLastResponse(), END_QUOTES); */
+    }
+    break;
+
+case 'editCounter':
+    try {
+        $client->AsignarContador($_POST["counterID"], $_POST["value"]);
+        echo "_OK_: The counter's value was correctly set. Refreshing...";
+    } catch (SoapFault $error) {
+        echo "WARN: Error setting new value: <b>$error->faultstring</b>";
     }
     break;
 
 default:
-
     echo "ERR_: Error on query: <b>'$action' is not a valid action.</b>";
     break;
 }
